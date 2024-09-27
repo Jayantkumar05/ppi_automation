@@ -81,12 +81,29 @@ class Issued_Card_class:
     UnFreeze_Card_Button_Xpath = "//button[normalize-space(text())='Unfreeze Card']"
     Conform_Freeze_Card_Button_Xpath = "//button[normalize-space(text())='Yes, Freeze Card']"
     Conform_UnFreeze_Card_Button_Xpath = "//button[normalize-space(text())='Yes, Unfreeze Card']"
-    Get_Toast_Message_Class_Name = "v-toast__text" 
+    Get_Toast_Message_Xpath = "//p[@class='v-toast__text']" 
     # Locatore For Block Card
     Block_Card_Button_Xpath = "//button[normalize-space(text())='Block Card']"
     Conform_Block_Card_Button_Xpath = "//button[normalize-space(text())='Yes, Block Card']"
     Double_Conform_Block_Card_Button_Xpath = "//button[text()='Block']"
     Click_Damage_Input_Buttom_Xpath = "(//input[@type='radio'])[9]"
+    
+    # Locators For Print Digital Card
+    Print_Section_Click_Print_Button_Xpath = "//button[normalize-space(text())='Print Card']"
+    # Print_Section_Name_On_Card_Xpath = "//input[@id='nameOnCard-input-id']"
+    Print_Section_Click_Add_New_Address_Xpath = "//div[@class='add-address dashedBdr']//span[text()='Add new Address']"
+    Print_Section_Fill_House_Xpath = "//input[@aria-label='address line 1']"
+    Print_Section_Fill_Area_Xpath = "//input[@aria-label='address line 2']"
+    Print_Section_Fill_Landmark_Xpath = "//input[@name='landmark']"
+    Print_Section_Fill_Pincode_Xpath = "//input[@id='pincode-input']"
+    Print_Section_Fill_City_Xpath = "//input[@id='city-input']"
+    Print_Section_Fill_State_Xpath = "//input[@id='state-input']"
+    Print_Section_Click_Add_Button_Xpath = "//button[contains(text(),'Add')]"
+    # Check Toast Message : Address added successfully 
+    Print_Section_Select_Address_Xpath = "(//div[@id='address-block']//label[@class='custom-control-label'])[2]"
+    Print_Section_Click_Final_Submit_Button_Xpath = "//button[contains(text(),'Submit')]"
+    # Check Toast Message : Done
+    
      
     # ===============================================================================================
     
@@ -198,8 +215,8 @@ class Issued_Card_class:
     # Personalized Card Methods GC =========================================================================
     
     def Personalized_Card_Type(self):
-        Digital_Card_Type_element = self.driver.find_element(By.XPATH, self.P_Personalized_Card_Type_xpath)
-        Digital_Card_Type_element.click()
+        Personalized_Card_Type_element = self.driver.find_element(By.XPATH, self.P_Personalized_Card_Type_xpath)
+        Personalized_Card_Type_element.click()
     
     # Insta Card mathods ================================================================================
     
@@ -399,12 +416,56 @@ class Issued_Card_class:
         Double_Conform_Block_Card_Button_ele.click()
           
     def Click_Damage_Input_Buttom(self):
-        Click_Damage_Input_Buttom_ele = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.Click_Damage_Input_Buttom_Xpath)))
-        Click_Damage_Input_Buttom_ele.click()
+        Click_Damage_Input_Button_ele = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.Click_Damage_Input_Buttom_Xpath)))
+        Click_Damage_Input_Button_ele.click()
         
     def Get_Toast_Message(self):
-        Get_Toast_Message_ele = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.Get_Toast_Message_Class_Name)))
+        Get_Toast_Message_ele = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.Get_Toast_Message_Xpath)))
         return Get_Toast_Message_ele.text
+
+    def Click_Print_Button(self):
+        Click_Print_Button_ele = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.Print_Section_Click_Print_Button_Xpath)))
+        Click_Print_Button_ele.click()  
+    
+    def Click_Add_New_Address(self):
+        Click_Add_New_Address_ele = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.Print_Section_Click_Add_New_Address_Xpath)))
+        Click_Add_New_Address_ele.click()
+        
+    def Fill_House(self,house):
+        Fill_House_ele = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.Print_Section_Fill_House_Xpath)))
+        Fill_House_ele.send_keys(house)
+        
+    def Fill_Area(self,area):
+        Fill_Area_ele = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.Print_Section_Fill_Area_Xpath)))
+        Fill_Area_ele.send_keys(area)
+        
+    def Fill_Landmark(self,landmark):
+        Fill_Landmark_ele = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.Print_Section_Fill_Landmark_Xpath)))
+        Fill_Landmark_ele.send_keys(landmark)
+        
+    def Fill_Pincode(self,pincode):
+        Fill_Pincode_ele = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.Print_Section_Fill_Pincode_Xpath)))
+        Fill_Pincode_ele.send_keys(pincode)
+        
+    def Fill_City(self,city):
+        Fill_City_ele = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.Print_Section_Fill_City_Xpath)))
+        Fill_City_ele.send_keys(city)
+        
+    def Fill_State(self,state):
+        Fill_State_ele = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.Print_Section_Fill_State_Xpath)))
+        Fill_State_ele.send_keys(state)       
+    
+    def Click_Add_Button(self):
+        Click_Add_Button_ele = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.Print_Section_Click_Add_Button_Xpath)))
+        Click_Add_Button_ele.click()
+    
+    def Select_Address(self):
+        Select_Address_ele = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.Print_Section_Select_Address_Xpath)))
+        Select_Address_ele.click()
+        
+    def Click_Final_Submit_Button(self):
+        Click_Final_Submit_Button_ele = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.Print_Section_Click_Final_Submit_Button_Xpath)))
+        Click_Final_Submit_Button_ele.click()
         
         
     # ==========================================================================================================================================================
@@ -642,10 +703,11 @@ class Issued_Card_class:
         time.sleep(2)
         self.Click_Issued_Card_Button()
         time.sleep(5)    
-  
+    # =================================================================================================================================
+    # =================================================================================================================================
     
-    # Mwthod to Issue Personalized GPR Card For Yes Bank Allocation...
-    def Issued_Personalized_card_to_GPR_for_Yes_Bank(self, cardname, businessname, 
+    # Mwthod to Issue Digital GPR Card For Yes Bank ...
+    def Issued_Digital_card_to_GPR_for_Yes_Bank(self, cardname, businessname, 
                                                      cardprogram, wallet1, wallet2):
 
         self.Click_Card_Btn()
@@ -658,20 +720,160 @@ class Issued_Card_class:
         # time.sleep(2)  
         random_mobile = self.fill_random_mobile_number()
         time.sleep(2)
-        self.Personalized_Card_Type()
+        self.Digital_Card_Type()
         time.sleep(2)
-
-        # Ensure proper input and interaction with business name
         self.Displayed_Business_Name(businessname + Keys.ENTER)
         print("Business Name Entered")
-
         time.sleep(2)
-
-        # Ensure proper input and interaction with card program
         self.Select_The_Card_Program(cardprogram + Keys.ENTER)
         print("Card Program Selected")
-        
+        time.sleep(2) 
+        self.Wallet_First_Input_Box(wallet1)
+        # time.sleep(2)
+        self.Wallet_Second_Input_Box(wallet2)
+        # time.sleep(2)
+        self.D_Digital_house_number("housenum")
+        # time.sleep(2)
+        self.D_Area_Name("area")
+        # time.sleep(2)
+        self.D_Landmark("landmark")
+        # time.sleep(2)
+        self.D_Pincode("637827")
+        # time.sleep(2)
+        self.D_City("Bangalore")
+        # time.sleep(2)
+        self.D_State("Karnataka")
         time.sleep(2)
+        self.Click_Issued_Card_Button()
+        time.sleep(2)
+        
+        # Check Toast Message After Issued Card 
+        Issue_card_expected_toast_message = "Card creation is in progress"
+        logging.info(f"Expected Personalized Card creation toast message: {Issue_card_expected_toast_message}")
+        Issue_card_Actual_toast_message = self.Get_Toast_Message()
+        assert Issue_card_expected_toast_message == Issue_card_Actual_toast_message
+        logging.info(f"Actual Personalized Card creation toast message: {Issue_card_Actual_toast_message}")
+        logging.info("Both Are Matched")
+        
+        return random_mobile, random_name
+        
+    
+    
+    def Print_Digital_Card_In_GPR_YES_Bank(self, mobile):
+        # For Temproary Used
+        self.Click_Card_Btn()
+        time.sleep(2)
+        
+        self.Search_Mobile_In_Yes_Bank(mobile)
+        time.sleep(2)
+
+        self.Click_Search_option()
+        time.sleep(2)
+        
+        Before_Card_Type = WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located((By.XPATH, "//span[text()='Digital only']"))
+            )
+        # Extract the text from the WebElement
+        Before_card_type_text = Before_Card_Type.text
+        logging.info(f"Before Card Type is: {Before_card_type_text}")
+        time.sleep(2)
+        
+        Click_Check_GPR_Card_Details_Button = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, '//div[@variant="primary"]'))
+            )
+        Click_Check_GPR_Card_Details_Button.click()
+        logging.info("Successfully Clicked Card Detail Button")
+        time.sleep(2)
+        
+        self.Click_Print_Button()
+        time.sleep(2)
+        
+        self.Click_Add_New_Address()
+        time.sleep(2)
+        
+        self.Fill_House('Demo House Name')
+        
+        self.Fill_Area('Demo Area')
+        
+        self.Fill_Landmark('Demo Landmark')
+        
+        self.Fill_Pincode(784576)
+        
+        self.Fill_City('Demo City')
+        
+        self.Fill_State('Demo State')
+        
+        self.Click_Add_Button()
+        time.sleep(2)
+        
+        self.Select_Address() 
+        logging.info("Successfully Select Address")
+        time.sleep(1)
+        
+        Expected_Toast_Message = "Address added successfully" 
+        Actual_Toast_Message = self.Get_Toast_Message() 
+        assert Expected_Toast_Message == Actual_Toast_Message
+        logging.info(f"Expected Toast Message: {Expected_Toast_Message}, Actual Toast Message: {Actual_Toast_Message}")
+        logging.info("Both Are Match")
+        time.sleep(2)
+        
+        self.Click_Final_Submit_Button() 
+        time.sleep(1)
+        
+        Expected_Toast_Message = "Done"
+        Actual_Toast_Message = self.Get_Toast_Message()
+        assert Expected_Toast_Message == Actual_Toast_Message
+        logging.info(f"Expected Toast Message: {Expected_Toast_Message}, Actual Toast Message: {Actual_Toast_Message}")
+        logging.info("Both Are Match")
+        time.sleep(2)
+        
+        self.Croxx_Search_option()
+        time.sleep(2)
+        
+        self.Search_Mobile_In_Yes_Bank(mobile)
+        time.sleep(2)
+
+        self.Click_Search_option()
+        time.sleep(2)
+        
+        After_Card_Type = WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located((By.XPATH, "//span[text()='Personalized']"))
+            ) 
+        # Extract the text from the WebElement
+        After_card_type_text = After_Card_Type.text 
+        time.sleep(2)
+    
+        assert Before_card_type_text != After_card_type_text
+        logging.info(f"Before Card Type Is: {Before_card_type_text}, After Card Type Has Changed To: {After_card_type_text} ")        
+    
+        self.Croxx_Search_option()
+        time.sleep(2) 
+    
+    # ================================================================================================================================
+    # ================================================================================================================================
+    
+    # Mwthod to Issue Personalized GPR Card For Yes Bank ...
+    def Issued_Personalized_card_to_GPR_for_Yes_Bank(self, cardname, businessname, 
+                                                     cardprogram, wallet1, wallet2):
+
+        # self.Click_Card_Btn()
+        # time.sleep(2)
+        
+        self.Click_Issue_Card_Form()
+        time.sleep(2) 
+        random_name = self.generate_random_name()
+        # time.sleep(2)
+        self.Name_On_Card(cardname)
+        # time.sleep(2)  
+        random_mobile = self.fill_random_mobile_number()
+        time.sleep(2)
+        self.Personalized_Card_Type()
+        time.sleep(2)
+        self.Displayed_Business_Name(businessname + Keys.ENTER)
+        print("Business Name Entered")
+        time.sleep(2)
+        self.Select_The_Card_Program(cardprogram + Keys.ENTER)
+        print("Card Program Selected") 
         time.sleep(2)
         self.Wallet_First_Input_Box(wallet1)
         # time.sleep(2)
@@ -692,12 +894,20 @@ class Issued_Card_class:
         self.Click_Issued_Card_Button()
         time.sleep(2)
         
+        # Check Toast Message After Issued Card 
+        Issue_card_expected_toast_message = "Card creation is in progress"
+        logging.info(f"Expected Personalized Card creation toast message: {Issue_card_expected_toast_message}")
+        Issue_card_Actual_toast_message = self.Get_Toast_Message()
+        assert Issue_card_expected_toast_message == Issue_card_Actual_toast_message
+        logging.info(f"Actual Personalized Card creation toast message: {Issue_card_Actual_toast_message}")
+        logging.info("Both Are Matched")
+        
         return random_mobile, random_name
     
   
     # Checking verification Issued_Personalized_card_Table_to_GPR_Card_for_Yes_Bank.
     
-    def Do_YES_Min_KYC_For_Personalized_Issued_Card(self,random_mobile, random_name):
+    def Do_YES_Min_KYC_Issued_Card(self,random_mobile, random_name):
         
         self.Click_Card_Btn()
         time.sleep(2)       
@@ -722,13 +932,16 @@ class Issued_Card_class:
         time.sleep(2)                 
         
         
-    def Check_Verification_Issued_Personalized_card_to_GPR_for_Yes_Bank(self, random_mobile, random_name):
+    def Check_Verification_Issued_card_to_GPR_for_Yes_Bank(self, random_mobile, random_name):
+        # For Temproary Used
+        # self.Click_Card_Btn()
+        # time.sleep(2)
         
         # Check After Kyc Card Status
         Before_Card_holder_Name = self.Table_Row_Before_Card_Holder_Name()
         Before_Card_Status = self.Table_Row_Before_Card_Sattus()
         
-        self.Do_YES_Min_KYC_For_Personalized_Issued_Card(random_mobile, random_name)
+        self.Do_YES_Min_KYC_Issued_Card(random_mobile, random_name)
          
         
         After_Card_Status_element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH, '//table//tbody//tr//td[10]')))
@@ -767,18 +980,14 @@ class Issued_Card_class:
         logging.info(f"After Card Holder Name Check: {After_Card_holder_Name} ")
         
         
-        
         assert Before_Card_holder_Name == After_Card_holder_Name
         
         logging.info("Before Card Holder Name After Card Holder Name Both Are Matched!.")  
-        time.sleep(2) 
-        print("Click Search-78")
-        self.Croxx_Search_option()
-        time.sleep(2)
-        print("Check Issue Card Click-78")
+        time.sleep(2)  
+        self.Croxx_Search_option() 
         time.sleep(2)
             
-    def Load_Fund_In_Personalized_Issue_Card(self, mobile, amt):
+    def Load_Fund_In_Issue_Card(self, mobile, amt):
         self.Click_Business_Page()
         time.sleep(2)
 
@@ -794,12 +1003,10 @@ class Issued_Card_class:
         self.Click_Croxx_Button()
         time.sleep(2)
 
-        self.Click_Card_Btn()
-        print("2")
-        time.sleep(5)
-        self.Click_Search_option()
-        print("Check_Clear_2")       
-        time.sleep(1)
+        self.Click_Card_Btn() 
+        time.sleep(4)
+        self.Click_Search_option()     
+        time.sleep(2)
         self.Search_Mobile_In_Yes_Bank(mobile)
         time.sleep(2)
 
@@ -823,7 +1030,7 @@ class Issued_Card_class:
             self.Load_Money_Button()
             time.sleep(3)
             
-            Wallet_Name_ele = self.driver.find_element(By.XPATH, "//div[text()='asdfasdf']")
+            Wallet_Name_ele = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[text()='asdfasdf']")))
             Check_Wallet_Name = Wallet_Name_ele.text.strip()
 
             logging.info(f"Checking row Wallet Name: {Check_Wallet_Name}")
@@ -831,7 +1038,7 @@ class Issued_Card_class:
             if Wallet_Name.lower() == Check_Wallet_Name.lower():
                 logging.info(f"Wallet name matched: {Check_Wallet_Name}")
 
-                Before_Load_wallet_Balance_ele = self.driver.find_element(By.XPATH, "//span[@class='wallet-balance']")
+                Before_Load_wallet_Balance_ele = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//span[@class='wallet-balance']")))
                 Before_Load_wallet_Balance = Before_Load_wallet_Balance_ele.text.strip()
 
                 self.Load_Money_INput_Box(amt)
@@ -846,22 +1053,18 @@ class Issued_Card_class:
                 Click_Check_GPR_Card_Details_Button.click()
                 
                 self.Load_Money_Button()
-                time.sleep(3)                 
-
-                After_Load_wallet_Balance_ele = self.driver.find_element(By.XPATH, "//span[@class='wallet-balance']")
+                time.sleep(3)         
+                
+                After_Load_wallet_Balance_ele = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//span[@class='wallet-balance']")))
                 After_Load_wallet_Balance = After_Load_wallet_Balance_ele.text.strip()
 
                 if Before_Load_wallet_Balance != After_Load_wallet_Balance:
                     logging.info(f"Before GPR Wallet Balance: {Before_Load_wallet_Balance}, Successfully Uploaded: {After_Load_wallet_Balance}")
                     WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.XPATH, "(//button[@class='close'])[2]"))).click()
                     WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.XPATH, "(//button[@class='close'])[1]"))).click()
-                
-                    time.sleep(2)
-                    print("Click Search-1")
+                    time.sleep(2) 
                     self.Croxx_Search_option()
-                    time.sleep(2)
-                    print("Check Issue Card Click-1")
-                    time.sleep(2)
+                    time.sleep(2) 
                     
                 else:
                     logging.error("Wallet balance did not update.")
@@ -871,7 +1074,8 @@ class Issued_Card_class:
             logging.info("Status does not match.")
 
     
-    def test_Issued_Personalized_GPR_Card_Load_Fund_Check_Toast_Method(self, mobile, amt):
+    def test_Issued_GPR_Card_Load_Fund_Check_Toast_Method(self, mobile, amt):
+        
         self.Click_Business_Page()
         time.sleep(2)
 
@@ -913,7 +1117,7 @@ class Issued_Card_class:
             self.Load_Money_Button()
             time.sleep(3)
             
-            Wallet_Name_ele = self.driver.find_element(By.XPATH, "//div[text()='asdfasdf']")
+            Wallet_Name_ele = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[text()='asdfasdf']")))
             Check_Wallet_Name = Wallet_Name_ele.text.strip()
 
             logging.info(f"Checking row Wallet Name: {Check_Wallet_Name}")
@@ -930,22 +1134,29 @@ class Issued_Card_class:
                 logging.error("Wallet name did not match.")
         else:
             logging.info("Status does not match.")
+            
+        Limit_exceeded_Expected_Toast_Message = "Max holding amount exceeded"
+        Limit_exceeded_Actual_Toast_Message = self.Get_Toast_Message()
+        assert Limit_exceeded_Expected_Toast_Message == Limit_exceeded_Actual_Toast_Message
+        logging.info(f"Limit_exceeded_Toast_Message toast message: {Limit_exceeded_Actual_Toast_Message}")
+        
+        self.Click_Cross_Buttons() 
+        time.sleep(2)
 
     def Click_Cross_Buttons(self):
         
         WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.XPATH, "(//button[@class='close'])[2]"))).click()
         time.sleep(1)
         WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.XPATH, "(//button[@class='close'])[1]"))).click()
-        time.sleep(2)
-        print("Click Search")
-        self.Croxx_Search_option()
-        time.sleep(2)
-        print("Check Issue Card Click")
+        time.sleep(2) 
+        self.Croxx_Search_option() 
         time.sleep(2)     
     
     
-    def Issued_Personalized_GPR_Card_Withdraw_Fund_Check_Toast_Method(self, mobile, amt):
-        
+    def Issued_GPR_Card_Withdraw_Fund_Check_Toast_Method(self, mobile, amt):
+        # For Temproary Used
+        self.Click_Card_Btn()
+        time.sleep(2)
         
         self.Search_Mobile_In_Yes_Bank(mobile)
         time.sleep(2)
@@ -968,9 +1179,16 @@ class Issued_Card_class:
         
         self.Click_withdrwal_Money_Submit_button()
         time.sleep(1)
-            
+        
+        Lower_than_Amt_Expected_Toast_Message = "App Balance is lower than given amount"
+        Lower_than_Amt_Actual_Toast_Message = self.Get_Toast_Message()
+        assert Lower_than_Amt_Expected_Toast_Message == Lower_than_Amt_Actual_Toast_Message
+        logging.info(f"Check Toast Message: {Lower_than_Amt_Actual_Toast_Message}")
+        time.sleep(2) 
+        self.Click_Cross_Buttons() 
+        time.sleep(2)
     
-    def Withdraw_Fund_In_Personalized_Issue_Card_For_GPR(self, mobile, amt):
+    def Withdraw_Fund_In_Issue_Card_For_GPR(self, mobile, amt):
         
         # self.Click_Card_Btn()
         # time.sleep(2)
@@ -991,16 +1209,22 @@ class Issued_Card_class:
         self.Withdwal_Fund_Button()
         time.sleep(2)
         
-        Before_Wallet_Name_ele = self.driver.find_element(By.XPATH, "//div[@class='wallet-name word-break']")
+        Before_Wallet_Name_ele = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='wallet-name word-break']")))
         Check_Before_Wallet_Name = Before_Wallet_Name_ele.text.strip()
         
-        Before_withdraw_wallet_Balance_ele = self.driver.find_element(By.XPATH, "//span[@class='wallet-balance']")
+        Before_withdraw_wallet_Balance_ele = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//span[@class='wallet-balance']")))
         Before_withdraw_wallet_Balance = Before_withdraw_wallet_Balance_ele.text.strip()
         
         self.Load_Money_INput_Box(amt)
         time.sleep(2)
         self.Click_withdrwal_Money_Submit_button()
         time.sleep(2)
+        
+        Expected_Toast_Message = "Money unloaded successfully"
+        Actual_Toast_Message = self.Get_Toast_Message()
+        assert Expected_Toast_Message == Actual_Toast_Message
+        logging.info(f"Expected Toast Message Is: {Expected_Toast_Message}, And Actual Toast MEssagae Is: {Actual_Toast_Message}")
+        logging.info("Both Are Mached!")
         
         self.Croxx_Search_option()
         time.sleep(2)
@@ -1017,10 +1241,10 @@ class Issued_Card_class:
         self.Withdwal_Fund_Button()
         time.sleep(2)
         
-        After_Wallet_Name_ele = self.driver.find_element(By.XPATH, "//div[@class='wallet-name word-break']")
+        After_Wallet_Name_ele = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='wallet-name word-break']")))
         Check_After_Wallet_Name = After_Wallet_Name_ele.text.strip()
         
-        After_withdraw_wallet_Balance_ele = self.driver.find_element(By.XPATH, "//span[@class='wallet-balance']")
+        After_withdraw_wallet_Balance_ele = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//span[@class='wallet-balance']")))
         After_withdraw_wallet_Balance = After_withdraw_wallet_Balance_ele.text.strip()
         
         assert Check_Before_Wallet_Name == Check_After_Wallet_Name
@@ -1033,7 +1257,7 @@ class Issued_Card_class:
         time.sleep(2)
         
         
-    def Do_freeze_card_For_GPR_Personalized_Card(self, mobile):
+    def Do_freeze_card_For_GPR_Card(self, mobile):
 
         # self.Click_Card_Btn()
         # time.sleep(2)
@@ -1075,7 +1299,6 @@ class Issued_Card_class:
         # Verify the toast message
         expected_toast_message = f"Card ending with {card_4_digit_number} is LOCKED"
         logging.info(f"Expected Toast Message IS: {expected_toast_message}")
-
  
         current_toast_message = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, "//p[@class='v-toast__text']"))
@@ -1109,7 +1332,7 @@ class Issued_Card_class:
         self.Croxx_Search_option() 
         time.sleep(2)
 
-    def Do_Unfreeze_card_For_GPR_Personalized_Card(self, mobile):
+    def Do_Unfreeze_card_For_GPR_Card(self, mobile):
 
         # self.Click_Card_Btn()
         # time.sleep(2)
@@ -1184,7 +1407,7 @@ class Issued_Card_class:
         self.Croxx_Search_option()
         time.sleep(2)
         
-    def Do_Block_Card_For_GPR_Personalized_Card(self, mobile):
+    def Do_Block_Card_For_GPR_Card(self, mobile):
         
         # self.Click_Card_Btn()
         # time.sleep(2)
